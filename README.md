@@ -46,8 +46,7 @@ User Configuration → Administrative Templates → Control Panel → Programs �
 
 ### 4.3 Restrict Control Panel Access  
 User Configuration → Administrative Templates → Control Panel → Restrict access to control panel/settings
-
-![Control Panel Restrictions Policy](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/E6D851C5-6B31-4515-A7A3-5B483A9D39A7.png)
+(https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/E6D851C5-6B31-4515-A7A3-5B483A9D39A7.png)
 
 ---
 
