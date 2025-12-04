@@ -1,4 +1,3 @@
-
 # Active Directory Hardening & Group Policy Implementation (Lab Project)
 
 ## 📌 Overview
@@ -104,9 +103,87 @@ All Group Policies were created and managed in *Group Policy Management*.
 2. Select *Create a GPO in this domain, and Link it here…*  
 3. Name it something clear, e.g. *Disable shutdown Ability*
 
-![Create New GPO & Link to Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Impl…
+![Create New GPO & Link to Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011953.png)
 
-📝 Notes
-	•	All image links use GitHub raw URLs.
-	•	If you move images into a different folder, update the /screenshots/ part of the paths.
-	•	If a particular screenshot doesn’t visually match the step, you can simply swap its filename with another from your list — the URL pattern stays the same.
+The GPO now appears under *Group Policy Objects*:
+
+![GPO Objects in Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023716.png)
+
+---
+
+### 5.2 – Disable Shut Down / Restart / Sleep / Hibernate
+
+Edit *Disable shutdown Ability* and navigate to:
+
+> *Computer Configuration → Policies → Administrative Templates → Start Menu and Taskbar*  
+
+Locate *“Remove and prevent access to the Shut Down, Restart, Sleep, and Hibernate commands”*.
+
+![Locate Shutdown Restriction Policy](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015233.png)
+
+![Policy Focused in Editor](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015625.png)
+
+Open the policy and set it to *Enabled*:
+
+![Remove Shutdown / Restart – Enabled](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015813.png)
+
+Save the GPO.
+
+---
+
+### 5.3 – Restrict Control Panel & Add/Remove Programs
+
+Next, I created another GPO named *Disable Add or remove programs* (or reused a dedicated hardening GPO) and edited:
+
+> *User Configuration → Policies → Administrative Templates → Control Panel*  
+
+Key settings include:
+
+- *“Prohibit access to Control Panel and PC settings”* → Enabled  
+- Under *Control Panel → Add or Remove Programs*:  
+  - *“Remove Add or Remove Programs”* → Enabled  
+
+![Control Panel / Programs GPO Settings](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20014052.png)
+
+GPMC summary shows the updated policy settings:
+
+![GPO Summary After Editing Policies](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20192423.png)
+
+And specifically the Add/Remove Programs removal:
+
+![Remove Add or Remove Programs – Enabled](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20192939.png)
+
+---
+
+## 6️⃣ Security Filtering (Targeting Users / Groups)
+
+By default, GPOs apply to *Authenticated Users. To harden only specific users or groups, I used **Security Filtering*:
+
+1. Select the GPO in *GPMC*  
+2. Go to the *Scope* tab  
+3. Under *Security Filtering*:
+   - Remove Authenticated Users (if you don’t want everyone affected)
+   - Click *Add…* and choose:
+     - Individual user(s) like *Babafemi Raji*
+     - Security groups (e.g. country-specific or department-specific groups)
+
+*Selecting a user / group from AD:*
+
+![Select User / Computer / Group for Filtering](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023822.png)
+
+*GPO after adding specific users / groups to Security Filtering:*
+
+![GPO Security Filtering Updated](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20024217.png)
+
+Another view of GPO + links in the domain:
+
+![Linked GPOs / Status Overview](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20130846.png)
+
+---
+
+## 7️⃣ Force Group Policy Update
+
+To make sure the new settings apply immediately, on the Domain Controller I ran:
+
+```powershell
+gpupdate /force
