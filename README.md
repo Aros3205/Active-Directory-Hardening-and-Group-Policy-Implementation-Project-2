@@ -1,138 +1,110 @@
 
+# Active Directory Hardening & Group Policy Implementation (Lab Project)
 
-## 📌 Overview  
-This project demonstrates how to:
+## 📌 Overview
 
-- Install and configure *Active Directory Domain Services (AD DS)*
-- Promote a Windows Server to a *Domain Controller*
-- Create and organize *Organizational Units (OUs)* and domain users
-- Implement *security-hardening Group Policy Objects (GPOs)*:
-  - Disable shutdown / restart options
-  - Block *Command Prompt (CMD)*
-  - Hide / restrict *Add or Remove Programs*
-  - Restrict access to *Control Panel*
-- Apply *Security Filtering* to target specific users/groups
-- Test and verify policies on a *Windows 8.1* domain client
+In this lab, I designed and implemented an on-premises *Active Directory* environment and applied *Group Policy* for security hardening. The project covers:
 
----
+- Installing and configuring *Active Directory Domain Services (AD DS)* and DNS  
+- Promoting a Windows Server to a *Domain Controller*  
+- Designing *Organizational Units (OUs)* and creating users  
+- Building hardening *Group Policy Objects (GPOs)*:
+  - Disable Shut Down / Restart / Sleep / Hibernate
+  - Restrict Control Panel and Add/Remove Programs
+  - Limit what standard users can change
+- Using *Security Filtering* to target specific users / groups  
+- Testing the policies on a *Windows 8.1 domain-joined client*
 
-## 1️⃣ Install AD DS  
-
-From *Server Manager*:
-
-> Add Roles and Features → Select *Active Directory Domain Services*
-
-[Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2
-/Screenshot (71).png](https://github.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/blob/main/Screenshot%20(71).png)
+All steps below include screenshots taken directly from the lab.
 
 ---
 
-## 2️⃣ Promote Server to Domain Controller  
+## 1️⃣ Lab Topology & Virtual Networking
 
-After installing the AD DS role, promote the server:
+The lab is built in a virtualized environment with:
 
-> Click *“Promote this server to a domain controller”* → Create a new forest/domain (e.g. rg.local)
+- 1 x Windows Server (Domain Controller)
+- 1 x Windows 8.1 client
+- NAT + internal networking to support domain communication and internet
 
-![Promote to Domain Controller](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(72).png)
+*VirtualBox / hypervisor network configuration (example):*
 
----
+![Virtual Network / Adapter Setup](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%20(71).png)
 
-## 3️⃣ Create Organizational Units (OUs) and Users  
-
-Open *Active Directory Users and Computers (ADUC)* and design the OU structure:
-
-- Create OUs for locations (e.g. *NIGERIA, **UK, **USA*)
-- Inside each, create sub-OUs for *Users* and *Computers*
-- Create domain users (e.g. Babafemi Raji) in the appropriate OU
-
-![OU Structure and Users](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(73).png)
+![VM Network Details](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%20(72).png)
 
 ---
 
-## 4️⃣ Open Group Policy Management  
+## 2️⃣ Install AD DS & DNS on Windows Server
 
-From *Server Manager* → *Tools* → *Group Policy Management*:
+Using *Server Manager → Add roles and features*, the following roles are installed:
 
-- Confirm the *Forest* and *Domain*
-- Review the default GPOs (Default Domain Policy, Default Domain Controllers Policy)
+- *Active Directory Domain Services*
+- *DNS Server*
 
-![Group Policy Management Console](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(74).png)
+![Server Manager – Roles Installed](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-11-29%20122151.png)
 
----
-
-## 5️⃣ Create Security-Hardening GPOs  
-
-### 5.1 Disable Shut Down / Restart / Sleep / Hibernate  
-
-Create a GPO (e.g. *“Disable Shutdown Ability”*) and edit:
-
-> Computer Configuration → Policies → Administrative Templates →  
-> Start Menu and Taskbar →  
-> *Remove and prevent access to the Shut Down, Restart, Sleep, and Hibernate commands* → *Enabled*
-
-![Disable Shutdown Policy](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(75).png)
+This prepares the server to be promoted to a domain controller.
 
 ---
 
-### 5.2 Disable Command Prompt (CMD)  
+## 3️⃣ Promote the Server to a Domain Controller
 
-Create or edit a GPO (e.g. *“Disable Access to CMD”*):
+After AD DS is installed:
 
-> User Configuration → Policies → Administrative Templates → System →  
-> *Prevent access to the command prompt* → *Enabled*
+1. In *Server Manager*, click the notification flag
+2. Choose *Promote this server to a domain controller*
+3. Create a *new forest*, for example: rg.local
+4. Configure DSRM password
+5. Complete the wizard and reboot
 
-![Disable CMD Policy](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(76).png)
+Once the server restarts as a DC, we can open the AD / GPO consoles.
+
+*Opening AD / GPO consoles from Server Manager:*
+
+![Server Manager – Tools menu](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
+
+*Group Policy Management Console (GPMC) showing the new domain:*
+
+![GPMC – Domain and Default GPOs](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060407.png)
 
 ---
 
-### 5.3 Disable / Hide Add or Remove Programs  
+## 4️⃣ Create Organizational Units (OUs) & Users
 
-Create a GPO (e.g. *“Disable Add or Remove Programs”*):
+Using *Active Directory Users and Computers (ADUC)*, I created a logical OU structure. For example:
 
-> User Configuration → Policies → Administrative Templates →  
-> Control Panel → Add or Remove Programs →  
-> *Remove Add or Remove Programs* → *Enabled*
+- *NIGERIA*
+  - NIGERIA-Users
+  - NIGERIA-Computers
+- *UK*
+  - UK-Users
+  - UK-Computers
+- *USA*
+  - USA-Users
+  - USA-Computers
 
-![Disable Add or Remove Programs](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(77).png)
+Then I created user accounts like *Babafemi Raji* and placed them into the appropriate OU.
+
+OU and object structure appear throughout GPMC:
+
+![Domain and OU Structure in GPMC / ADUC](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011800.png)
 
 ---
 
-### 5.4 Restrict Control Panel Access  
+## 5️⃣ Create Security Hardening GPOs
 
-To block access to Control Panel:
+All Group Policies were created and managed in *Group Policy Management*.
 
-> User Configuration → Policies → Administrative Templates → Control Panel →  
-> *Prohibit access to Control Panel and PC settings* → *Enabled*
+---
 
-![Restric…
-[18:17, 12/4/2025] Mr Tolu.🇺🇸: This ensures all new settings are applied immediately.
-[18:18, 12/4/2025] Mr Tolu.🇺🇸: 8️⃣ Test on Windows 8.1 Domain Client
+### 5.1 – Create & Link a New GPO
 
-8.1 Log in as a Domain User
+1. In *GPMC, right-click the **domain* (rg.local)  
+2. Select *Create a GPO in this domain, and Link it here…*  
+3. Name it something clear, e.g. *Disable shutdown Ability*
 
-On the Windows 8.1 machine joined to the domain (rg.local), log in with a domain user (e.g. Babafemi Raji).
-[18:18, 12/4/2025] Mr Tolu.🇺🇸: 8.2 Verify Control Panel / Programs Restrictions
-
-Try to:
-	•	Open Control Panel
-	•	Access Programs and Features / Add or Remove Programs
-	•	Shut down / restart from the start menu
-	•	Open cmd.exe
-
-They should now be blocked or hidden according to the applied GPOs.
-[18:19, 12/4/2025] Mr Tolu.🇺🇸: Summary
-	•	AD DS successfully installed and configured
-	•	Server promoted to a Domain Controller
-	•	Structured OUs and domain users created
-	•	GPOs built to:
-	•	Disable shutdown/restart options
-	•	Block Command Prompt
-	•	Hide Add/Remove Programs
-	•	Restrict Control Panel access
-	•	Security Filtering limits impact to intended users/groups
-	•	Policies verified from a Windows 8.1 domain client
-
-⸻
+![Create New GPO & Link to Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Impl…
 
 📝 Notes
 	•	All image links use GitHub raw URLs.
