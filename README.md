@@ -1,4 +1,4 @@
-[18:17, 12/4/2025] Mr Tolu.🇺🇸: # Active Directory Hardening & Group Policy Project
+
 
 ## 📌 Overview  
 This project demonstrates how to:
@@ -22,8 +22,8 @@ From *Server Manager*:
 
 > Add Roles and Features → Select *Active Directory Domain Services*
 
-Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2
-/Screenshot (71).png
+[Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2
+/Screenshot (71).png](https://github.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/blob/main/Screenshot%20(71).png)
 
 ---
 
