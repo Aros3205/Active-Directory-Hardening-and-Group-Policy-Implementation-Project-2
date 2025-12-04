@@ -2,7 +2,7 @@
 # Active Directory Hardening & Group Policy Implementation Project
 
 ## 📌 Overview
-This project demonstrates the deployment of an on-premises **Active Directory Domain Services (AD DS)** environment and the implementation of **Group Policy Objects (GPO)** to harden Windows domain systems.  
+This project demonstrates the deployment of an on-premises **Active Directory Domain Services (AD DS)** environment and the implementation of **Group Policy Objects (GPO)** to harden Windows domain systems. 
 It includes:
 
 - AD DS Installation  
