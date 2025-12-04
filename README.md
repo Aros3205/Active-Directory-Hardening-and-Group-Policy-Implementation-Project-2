@@ -187,3 +187,44 @@ To make sure the new settings apply immediately, on the Domain Controller I ran:
 
 ```powershell
 gpupdate /force
+them.
+
+⸻
+
+8️⃣ Join Windows 8.1 Client to the Domain
+
+On the Windows 8.1 machine:
+	1.	Set the DNS to point to the domain controller
+	2.	Join the domain rg.local
+	3.	Reboot
+	4.	Log in as a domain user (e.g. RG\braji)
+
+Client joined to domain and logged in as a domain user:
+9️⃣ Verify Group Policy Enforcement (Client Side)
+
+9.1 – Control Panel & Programs
+
+Open Control Panel and browse to Programs / Hardware and Sound to confirm that:
+	•	Access to Add or Remove Programs / Programs and Features is restricted
+	•	Certain options are greyed out or missing
+
+Control Panel home for the domain user:
+Devices and Printers screen:
+Navigate into Programs and Hardware and Sound – your restrictions from the GPO (like hiding Add/Remove Programs) will show here:
+9.2 – Additional Settings / Power & UI Restrictions
+
+Browse other Control Panel branches to see how far the GPO-based restrictions go:
+These screens show the final user experience once all Group Policy restrictions are in place.
+✅ Summary
+
+In this lab, I:
+	•	Installed Active Directory Domain Services and DNS on a Windows Server
+	•	Promoted the server to a Domain Controller for the rg.local domain
+	•	Built a location-based OU structure and created domain user accounts
+	•	Created and linked several hardening GPOs to:
+	•	Remove shutdown/restart/sleep/hibernate commands
+	•	Restrict access to Control Panel and Add or Remove Programs
+	•	Used Security Filtering to precisely target which users / groups are affected
+	•	Applied and validated the policies on a Windows 8.1 domain-joined client
+
+This documentation plus the screenshots provides a complete story of Active Directory hardening with Group Policy, from initial setup to real end-user impact.
