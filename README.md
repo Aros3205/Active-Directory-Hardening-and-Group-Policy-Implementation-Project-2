@@ -46,7 +46,8 @@ User Configuration → Administrative Templates → Control Panel → Programs �
 
 ### 4.3 Restrict Control Panel Access  
 User Configuration → Administrative Templates → Control Panel → Restrict access to control panel/settings
-(https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/E6D851C5-6B31-4515-A7A3-5B483A9D39A7.png)
+
+![Control Panel Restrictions Policy](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/E6D851C5-6B31-4515-A7A3-5B483A9D39A7.png)
 
 ---
 
@@ -89,6 +90,6 @@ Attempt to open Control Panel, Add/Remove Programs, cmd.exe, and other restricte
 ---
 
 ## 📎 Notes  
-- These image URLs use GitHub’s “raw” links, which reliably display images hosted in your repository.  [oai_citation:2‡Stack Overflow](https://stackoverflow.com/questions/8779197/how-to-link-files-directly-from-github-raw-github-com?utm_source=chatgpt.com)  
+- These image URLs use GitHub’s “raw” links, which reliably display images hosted in your repository.  
 - If you rename or move screenshots, update the URLs accordingly.  
 - For future screenshots, upload them to the same `screenshots/` folder to maintain link consistency.
