@@ -22,7 +22,8 @@ From *Server Manager*:
 
 > Add Roles and Features → Select *Active Directory Domain Services*
 
-![AD DS Install](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/screenshots/Screenshot%20(71).png)
+Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2
+/Screenshot (71).png
 
 ---
 
