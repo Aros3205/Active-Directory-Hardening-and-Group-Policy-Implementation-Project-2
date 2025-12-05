@@ -92,7 +92,7 @@ The workstation now receives domain-level policies. The following restrictions w
 
 ### 8.2 Control Panel Restrictions
 
-![Control Panel Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015110.png)
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20013712.png)
 
 ---
 
