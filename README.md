@@ -98,9 +98,8 @@ The workstation now receives domain-level policies. The following restrictions w
 
 ### 8.3 Hardware and Sound Restrictions
 
-![Hardware and Sound Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20013923.png)
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015110.png)
 
----
 
 ## 9. System Settings Access Restriction
 
