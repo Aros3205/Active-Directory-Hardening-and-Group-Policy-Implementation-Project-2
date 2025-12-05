@@ -1,4 +1,4 @@
-# Active Directory Hardening and Group Policy Implementation Project
+# Active Directory Hardening and Group Policy Implementation Project 2
 
 ## Overview
 This project demonstrates the installation and configuration of Active Directory Domain Services (AD DS), creation of a secure organizational structure, deployment of targeted Group Policy Objects (GPOs), and enforcement of workstation restrictions for improved security posture.
