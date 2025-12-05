@@ -1,145 +1,128 @@
-## 📌 Overview
+# Active Directory Hardening and Group Policy Implementation Project
 
-In this lab, I designed and implemented an on-premises *Active Directory* environment and applied *Group Policy* for security hardening. The project covers:
+## Overview
+This project demonstrates the installation and configuration of Active Directory Domain Services (AD DS), creation of a secure organizational structure, deployment of targeted Group Policy Objects (GPOs), and enforcement of workstation restrictions for improved security posture.
 
-- Installing and configuring *Active Directory Domain Services (AD DS)* and DNS  
-- Promoting a Windows Server to a *Domain Controller*  
-- Designing *Organizational Units (OUs)* and creating users  
-- Building hardening *Group Policy Objects (GPOs)*:
-  - Disable Shut Down / Restart / Sleep / Hibernate
-  - Restrict Control Panel and Add/Remove Programs
-  - Limit what standard users can change
-- Using *Security Filtering* to target specific users / groups  
-- Testing the policies on a *Windows 8.1 domain-joined client*
-
-All steps below include screenshots taken directly from the lab.
+Only essential screenshots are included to maintain a clean and professional documentation format.
 
 ---
 
-## 1️⃣ Lab Topology & Virtual Networking
+## 1. Installing Active Directory Domain Services (AD DS)
 
-The lab is built in a virtualized environment with:
+Open Server Manager → Add Roles and Features and select **Active Directory Domain Services**.
 
-- 1 x Windows Server (Domain Controller)
-- 1 x Windows 8.1 client
-- NAT + internal networking to support domain communication and internet
-
-*VirtualBox / hypervisor network configuration (example):*
-
-![Virtual Network / Adapter Setup](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%20(71).png)
-
-![VM Network Details](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%20(72).png)
+![Install AD DS](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060150.png)
 
 ---
 
-## 2️⃣ Install AD DS & DNS on Windows Server
+## 2. Promoting the Server to a Domain Controller
 
-Using *Server Manager → Add roles and features*, the following roles are installed:
+After installation, select **Promote this server to a domain controller**, then configure a new forest and domain.
 
-- *Active Directory Domain Services*
-- *DNS Server*
-
-![Server Manager – Roles Installed](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-11-29%20122151.png)
-
-This prepares the server to be promoted to a domain controller.
+![Promote to Domain Controller](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060407.png)
 
 ---
 
-## 3️⃣ Promote the Server to a Domain Controller
+## 3. Creating the Organizational Unit (OU) Structure
 
-After AD DS is installed:
+Open **Active Directory Users and Computers (ADUC)** and create OUs such as:
 
-1. In *Server Manager*, click the notification flag
-2. Choose *Promote this server to a domain controller*
-3. Create a *new forest*, for example: rg.local
-4. Configure DSRM password
-5. Complete the wizard and reboot
+- Admins  
+- Users  
+- Servers  
+- Workstations  
 
-Once the server restarts as a DC, we can open the AD / GPO consoles.
-
-*Opening AD / GPO consoles from Server Manager:*
-
-![Server Manager – Tools menu](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
-
-*Group Policy Management Console (GPMC) showing the new domain:*
-
-![GPMC – Domain and Default GPOs](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060407.png)
+![OU Structure](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011953.png)
 
 ---
 
-## 4️⃣ Create Organizational Units (OUs) & Users
+## 4. Creating Users and Assigning Roles
 
-Using *Active Directory Users and Computers (ADUC)*, I created a logical OU structure. For example:
+Create standard and privileged user accounts. Place them in their respective OUs to allow role-based access control (RBAC) through GPO inheritance.
 
-- *NIGERIA*
-  - NIGERIA-Users
-  - NIGERIA-Computers
-- *UK*
-  - UK-Users
-  - UK-Computers
-- *USA*
-  - USA-Users
-  - USA-Computers
-
-Then I created user accounts like *Babafemi Raji* and placed them into the appropriate OU.
-
-OU and object structure appear throughout GPMC:
-
-![Domain and OU Structure in GPMC / ADUC](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011800.png)
+![User Creation](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20014930.png)
 
 ---
 
-## 5️⃣ Create Security Hardening GPOs
+## 5. Creating and Linking Group Policy Objects (GPOs)
 
-All Group Policies were created and managed in *Group Policy Management*.
+### 5.1 Create a New GPO
+Open **Group Policy Management Console (GPMC)** → Right-click the OU → **Create a GPO**.
+
+![Create GPO](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20020210.png)
 
 ---
 
-### 5.1 – Create & Link a New GPO
+### 5.2 Apply Security Filtering
+Use **Security Filtering** to apply the GPO only to specific users or groups, improving precision and security.
 
-1. In *GPMC, right-click the **domain* (rg.local)  
-2. Select *Create a GPO in this domain, and Link it here…*  
-3. Name it something clear, e.g. *Disable shutdown Ability*
+![Security Filtering](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20020710.png)
 
-![Create New GPO & Link to Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Impl…
-[19:53, 12/4/2025] Aros.: them.
+---
 
-⸻
+## 6. Forcing GPO Updates
 
-8️⃣ Join Windows 8.1 Client to the Domain
+To immediately enforce changes on workstations and servers, use:
 
-On the Windows 8.1 machine:
-	1.	Set the DNS to point to the domain controller
-	2.	Join the domain rg.local
-	3.	Reboot
-	4.	Log in as a domain user (e.g. RG\braji)
+```
+gpupdate /force
+```
 
-Client joined to domain and logged in as a domain user:
-[19:53, 12/4/2025] Aros.: 9️⃣ Verify Group Policy Enforcement (Client Side)
+![GPUpdate](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015813.png)
 
-9.1 – Control Panel & Programs
+---
 
-Open Control Panel and browse to Programs / Hardware and Sound to confirm that:
-	•	Access to Add or Remove Programs / Programs and Features is restricted
-	•	Certain options are greyed out or missing
+## 7. Joining a Windows Client to the Domain
 
-Control Panel home for the domain user:
-[19:54, 12/4/2025] Aros.: Devices and Printers screen:
-[19:54, 12/4/2025] Aros.: Navigate into Programs and Hardware and Sound – your restrictions from the GPO (like hiding Add/Remove Programs) will show here:
-[19:56, 12/4/2025] Aros.: 9.2 – Additional Settings / Power & UI Restrictions
+From the client OS, navigate to:
 
-Browse other Control Panel branches to see how far the GPO-based restrictions go:
-[19:56, 12/4/2025] Aros.: These screens show the final user experience once all Group Policy restrictions are in place.
-[19:57, 12/4/2025] Aros.: ✅ Summary
+Control Panel → System → Change Settings → Domain Join
 
-In this lab, I:
-	•	Installed Active Directory Domain Services and DNS on a Windows Server
-	•	Promoted the server to a Domain Controller for the rg.local domain
-	•	Built a location-based OU structure and created domain user accounts
-	•	Created and linked several hardening GPOs to:
-	•	Remove shutdown/restart/sleep/hibernate commands
-	•	Restrict access to Control Panel and Add or Remove Programs
-	•	Used Security Filtering to precisely target which users / groups are affected
-	•	Applied and validated the policies on a Windows 8.1 domain-joined client
+![Domain Join](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023738.png)
 
-This documentation plus the screenshots provides a complete story of Active Directory hardening with Group Policy, from initial setup to real end-user impact.
+Reboot the workstation and log in with domain credentials.
+
+---
+
+## 8. Validating Group Policy Restrictions on the Client
+
+The workstation now receives domain-level policies. The following restrictions were applied.
+
+### 8.1 Remove “Add or Remove Programs”
+
+![Add/Remove Programs Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20192423.png)
+
+---
+
+### 8.2 Control Panel Restrictions
+
+![Control Panel Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015110.png)
+
+---
+
+### 8.3 Hardware and Sound Restrictions
+
+![Hardware and Sound Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20013923.png)
+
+---
+
+## 9. System Settings Access Restriction
+
+The workstation is prevented from accessing system settings as defined by the applied GPO.
+
+![System Settings Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20130846.png)
+
+---
+
+## Conclusion
+
+This project demonstrates:
+
+- Proper deployment of **Active Directory Domain Services**  
+- Organizational Unit structuring for **role-based management**  
+- Designing and applying **targeted Group Policies**  
+- Validating **security restrictions** on a domain-joined workstation  
+- Implementing foundational **AD hardening techniques**
+
+This documentation provides a clear, enterprise-grade representation of the AD security implementation process.
+
