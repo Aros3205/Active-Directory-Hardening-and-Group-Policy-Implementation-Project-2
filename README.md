@@ -38,10 +38,9 @@ Open **Active Directory Users and Computers (ADUC)** and create OUs such as:
 ## 4. Creating Users and Assigning Roles
 
 Create standard and privileged user accounts. Place them in their respective OUs to allow role-based access control (RBAC) through GPO inheritance.
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023716.png)
 
-![User Creation](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20014930.png)
 
----
 
 ## 5. Creating and Linking Group Policy Objects (GPOs)
 
