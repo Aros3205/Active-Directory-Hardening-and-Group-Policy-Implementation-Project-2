@@ -192,7 +192,7 @@ On the Windows 8.1 machine:
 
 ### 🔹 Windows 8.1 — Domain Login Screen
 
-![Windows 8 Login](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015639.png)
+![Windows 8 Login](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20130846.png)
 
 ---
 
