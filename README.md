@@ -74,7 +74,7 @@ From the client OS, navigate to:
 
 Control Panel → System → Change Settings → Domain Join
 
-![Domain Join](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023738.png)
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20130846.png)
 
 Reboot the workstation and log in with domain credentials.
 
