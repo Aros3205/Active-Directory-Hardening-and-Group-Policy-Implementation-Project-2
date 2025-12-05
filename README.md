@@ -1,5 +1,3 @@
-[19:32, 12/4/2025] Aros.: # Active Directory Hardening & Group Policy Implementation (Lab Project)
-
 ## 📌 Overview
 
 In this lab, I designed and implemented an on-premises *Active Directory* environment and applied *Group Policy* for security hardening. The project covers:
