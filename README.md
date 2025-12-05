@@ -18,6 +18,8 @@ After installation, select **Promote this server to a domain controller**, then 
 
 ![screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
 
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20022133.png)
+
 ---
 
 ## 3. Creating the Organizational Unit (OU) Structure
