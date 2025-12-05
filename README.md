@@ -99,3 +99,27 @@ This ensures the GPO applies *only* to targeted accounts.
 ## 🔁 6. Force Group Policy Update  
 
 To apply GPOs immediately:
+This was executed on the Domain Controller and the client machine after joining the domain.
+
+---
+
+## 💻 7. Join Windows 8.1 Client to the Domain  
+
+Steps:
+
+1. Set DNS to point to the Domain Controller  
+2. Join domain rg.local  
+3. Reboot  
+4. Log in using domain credentials  
+
+### Domain Login Screen  
+![Windows 8.1 Login](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015639.png)
+
+---
+
+## 🔍 8. Verify GPO Enforcement on the Client
+
+### 8.1 Remove “Add or Remove Programs”  
+GPO successfully hid the Programs & Features section.
+
+![Remove Add/Remove Programs](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/mai…
