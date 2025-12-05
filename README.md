@@ -1,77 +1,47 @@
-# Active Directory Hardening & Group Policy Implementation (Lab Project)
+# Active Directory Hardening & Group Policy Enforcement Project
 
-## 📌 Overview
-
-In this lab, I designed and implemented an on-premises *Active Directory* environment and applied *Group Policy* for security hardening. The project covers:
-
-- Installing and configuring *Active Directory Domain Services (AD DS)* and DNS  
-- Promoting a Windows Server to a *Domain Controller*  
-- Designing *Organizational Units (OUs)* and creating users  
-- Building hardening *Group Policy Objects (GPOs)*:
-  - Disable Shut Down / Restart / Sleep / Hibernate
-  - Restrict Control Panel and Add/Remove Programs
-  - Limit what standard users can change
-- Using *Security Filtering* to target specific users / groups  
-- Testing the policies on a *Windows 8.1 domain-joined client*
-
-All steps below include screenshots taken directly from the lab.
+## 🔒 Overview  
+This project demonstrates how I deployed and hardened a Windows Active Directory domain using Group Policy Objects (GPOs).  
+It includes domain controller setup, OU design, user provisioning, GPO creation, security filtering, and client-side validation.  
+The goal was to implement *enterprise-level security controls* using Group Policy.
 
 ---
 
-## 1️⃣ Lab Topology & Virtual Networking
-
-The lab is built in a virtualized environment with:
-
-- 1 x Windows Server (Domain Controller)
-- 1 x Windows 8.1 client
-- NAT + internal networking to support domain communication and internet
-
-*VirtualBox / hypervisor network configuration (example):*
-
-![Virtual Network / Adapter Setup](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%20(71).png)
-
-![VM Network Details](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%20(72).png)
+## 🧠 Skills Demonstrated
+- Active Directory Domain Services (AD DS)  
+- Group Policy Management (GPMC)  
+- Organizational Unit (OU) design  
+- Windows Server Administration  
+- User & Group Access Control  
+- Security Hardening (Least Privilege, UI/feature restrictions)  
+- Client Domain Integration  
+- Troubleshooting Group Policy application  
 
 ---
 
-## 2️⃣ Install AD DS & DNS on Windows Server
+## 🏗️ 1. Install Active Directory Domain Services (AD DS)
 
-Using *Server Manager → Add roles and features*, the following roles are installed:
+Using Server Manager → Add Roles and Features, I installed:
 
-- *Active Directory Domain Services*
-- *DNS Server*
+- Active Directory Domain Services  
+- DNS Server  
 
-![Server Manager – Roles Installed](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-11-29%20122151.png)
-
-This prepares the server to be promoted to a domain controller.
+This prepares the server for promotion to a Domain Controller.
 
 ---
 
-## 3️⃣ Promote the Server to a Domain Controller
+## 🏰 2. Promote Server to a Domain Controller  
 
-After AD DS is installed:
+After installing AD DS, I promoted the server to a Domain Controller and created a new forest:
 
-1. In *Server Manager*, click the notification flag
-2. Choose *Promote this server to a domain controller*
-3. Create a *new forest*, for example: rg.local
-4. Configure DSRM password
-5. Complete the wizard and reboot
-
-Once the server restarts as a DC, we can open the AD / GPO consoles.
-
-*Opening AD / GPO consoles from Server Manager:*
-
-![Server Manager – Tools menu](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
-
-*Group Policy Management Console (GPMC) showing the new domain:*
-
-![GPMC – Domain and Default GPOs](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060407.png)
+- *Domain Name:* rg.local  
+- DNS and AD DS configured automatically  
 
 ---
 
-## 4️⃣ Create Organizational Units (OUs) & Users
+## 🗂️ 3. Create Organizational Units (OU) and Users  
 
-Using *Active Directory Users and Computers (ADUC)*, I created a logical OU structure. For example:
+I designed a clean OU structure to separate users and computers by region:
 
 - *NIGERIA*
   - NIGERIA-Users
@@ -83,157 +53,49 @@ Using *Active Directory Users and Computers (ADUC)*, I created a logical OU stru
   - USA-Users
   - USA-Computers
 
-Then I created user accounts like *Babafemi Raji* and placed them into the appropriate OU.
+Then I created user accounts and placed them into the correct OU.
 
-OU and object structure appear throughout GPMC:
-
-![Domain and OU Structure in GPMC / ADUC](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011800.png)
+![OU Structure](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011953.png)
 
 ---
 
-## 5️⃣ Create Security Hardening GPOs
+## 🛡️ 4. Configure Group Policy Objects (GPOs)
 
-All Group Policies were created and managed in *Group Policy Management*.
+### 4.1 Disable Command Prompt (CMD)
 
----
+This security setting prevents users from running unauthorized scripts or commands.
 
-### 5.1 – Create & Link a New GPO
+*Path:*  
+User Configuration → Administrative Templates → System → Prevent access to the command prompt
 
-1. In *GPMC, right-click the **domain* (rg.local)  
-2. Select *Create a GPO in this domain, and Link it here…*  
-3. Name it something clear, e.g. *Disable shutdown Ability*
+### 4.2 Hide “Add or Remove Programs”
 
-![Create New GPO & Link to Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20011953.png)
+*Path:*  
+User Configuration → Administrative Templates → Control Panel → Programs → Hide Add/Remove Programs page
 
-The GPO now appears under *Group Policy Objects*:
+### 4.3 Restrict Control Panel Access
 
-![GPO Objects in Domain](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023716.png)
+*Path:*  
+User Configuration → Administrative Templates → Control Panel → Prohibit access to Control Panel and PC Settings
 
----
+### 4.4 Remove Shutdown / Restart / Sleep / Hibernate Buttons
 
-### 5.2 – Disable Shut Down / Restart / Sleep / Hibernate
-
-Edit *Disable shutdown Ability* and navigate to:
-
-> *Computer Configuration → Policies → Administrative Templates → Start Menu and Taskbar*  
-
-Locate *“Remove and prevent access to the Shut Down, Restart, Sleep, and Hibernate commands”*.
-
-![Locate Shutdown Restriction Policy](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015233.png)
-
-![Policy Focused in Editor](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015625.png)
-
-Open the policy and set it to *Enabled*:
-
-![Remove Shutdown / Restart – Enabled](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015813.png)
-
-Save the GPO.
+*Path:*  
+Computer Configuration → Administrative Templates → Start Menu and Taskbar → Remove and prevent access to Shut Down…
 
 ---
 
-### 5.3 – Restrict Control Panel & Add/Remove Programs
+## 🎯 5. Apply Security Filtering  
+Security Filtering allows GPOs to apply only to specific users or groups.
 
-Next, I created another GPO named *Disable Add or remove programs* (or reused a dedicated hardening GPO) and edited:
+Example: applying a restriction only to a standard user.
 
-> *User Configuration → Policies → Administrative Templates → Control Panel*  
+![Security Filtering](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20020710.png)
 
-Key settings include:
-
-- *“Prohibit access to Control Panel and PC settings”* → Enabled  
-- Under *Control Panel → Add or Remove Programs*:  
-  - *“Remove Add or Remove Programs”* → Enabled  
-
-![Control Panel / Programs GPO Settings](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20014052.png)
-
-GPMC summary shows the updated policy settings:
-
-![GPO Summary After Editing Policies](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20192423.png)
-
-And specifically the Add/Remove Programs removal:
-
-![Remove Add or Remove Programs – Enabled](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20192939.png)
+This ensures the GPO applies *only* to targeted accounts.
 
 ---
 
-## 6️⃣ Security Filtering (Targeting Users / Groups)
+## 🔁 6. Force Group Policy Update  
 
-By default, GPOs apply to *Authenticated Users. To harden only specific users or groups, I used **Security Filtering*:
-
-1. Select the GPO in *GPMC*  
-2. Go to the *Scope* tab  
-3. Under *Security Filtering*:
-   - Remove Authenticated Users (if you don’t want everyone affected)
-   - Click *Add…* and choose:
-     - Individual user(s) like *Babafemi Raji*
-     - Security groups (e.g. country-specific or department-specific groups)
-
-*Selecting a user / group from AD:*
-
-![Select User / Computer / Group for Filtering](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023822.png)
-
-*GPO after adding specific users / groups to Security Filtering:*
-
-![GPO Security Filtering Updated](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20024217.png)
-
-Another view of GPO + links in the domain:
-
-![Linked GPOs / Status Overview](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20130846.png)
-
----
-
-## 7️⃣ Join Windows 8.1 Client to the Domain
-
-On the Windows 8.1 machine:
-
-1. Set the DNS server to point to the Domain Controller  
-2. Join the domain **rg.local**  
-3. Reboot  
-4. Log in as a domain user (example: `RG\brafji`)
-
-### 🔹 Windows 8.1 — Domain Login Screen
-
-![Windows 8 Login](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20130846.png)
-
----
-
-## 8️⃣ Verify Group Policy Enforcement (Client Side)
-
-After logging into the domain account, confirm that Group Policy settings have applied.
-
-### 8.1 – Control Panel Restrictions
-
-#### 🔹 Programs / Add or Remove Programs Disabled
-
-![Control Panel – Programs Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015744.png)
-
----
-
-### 8.2 – Hardware & Sound Restrictions
-
-![Hardware and Sound Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023738.png)
-
----
-
-### 8.3 – Devices & Printers View
-
-![Devices and Printers Restricted](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20023716.png)
-
----
-
-## 9️⃣ Additional GPO-Based Restrictions
-
-These screenshots demonstrate further restrictions applied from the configured GPOs.
-
-### 9.1 – Users Cannot Modify System Settings
-
-![Restricted System Settings](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20024217.png)
-
----
-
-## ✅ Summary of Validation
-
-By testing the Windows 8.1 client:
-
-- GPO restrictions (Control Panel, Add/Remove Programs, Hardware/Sound, CMD, etc.) were successfully enforced  
-- The domain user environment behaves exactly as configured  
-- Security hardening policies are functioning as intended  
+To apply GPOs immediately:
