@@ -16,7 +16,7 @@ Open Server Manager → Add Roles and Features and select **Active Directory Dom
 
 After installation, select **Promote this server to a domain controller**, then configure a new forest and domain.
 
-![screenshot](https://raw.githubusercontent.com/Aros3203205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
+![screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
 
 ---
 
