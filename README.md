@@ -65,10 +65,9 @@ To immediately enforce changes on workstations and servers, use:
 ```
 gpupdate /force
 ```
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-03%20015639.png)
 
-![GPUpdate](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20015813.png)
 
----
 
 ## 7. Joining a Windows Client to the Domain
 
