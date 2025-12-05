@@ -47,7 +47,8 @@ Create standard and privileged user accounts. Place them in their respective OUs
 ### 5.1 Create a New GPO
 Open **Group Policy Management Console (GPMC)** → Right-click the OU → **Create a GPO**.
 
-![Create GPO](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20020210.png)
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20021938.png)
+
 
 ---
 
