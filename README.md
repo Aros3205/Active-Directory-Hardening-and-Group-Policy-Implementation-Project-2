@@ -24,7 +24,7 @@ On Windows Server, AD DS and DNS were installed through:
 
 *Server Manager → Add Roles and Features → Active Directory Domain Services*
 
-This enabled the environment for domain controller promotion.
+This enabled the environment for domain controller promotion
 
 ---
 
