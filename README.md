@@ -10,10 +10,7 @@ Only essential screenshots are included to maintain a clean and professional doc
 ## 1. Installing Active Directory Domain Services (AD DS)
 
 Open Server Manager → Add Roles and Features and select **Active Directory Domain Services**.
-
-![Install AD DS](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060150.png)
-
----
+https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-11-29%20122151.png
 
 ## 2. Promoting the Server to a Domain Controller
 
