@@ -54,9 +54,8 @@ Open **Group Policy Management Console (GPMC)** → Right-click the OU → **Cre
 ### 5.2 Apply Security Filtering
 Use **Security Filtering** to apply the GPO only to specific users or groups, improving precision and security.
 
-![Security Filtering](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20020710.png)
+![Screenshot](https://raw.githubusercontent.com/Aros3203205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-01%20060248.png)
 
----
 
 ## 6. Forcing GPO Updates
 
