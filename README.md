@@ -107,7 +107,7 @@ The workstation is prevented from accessing system settings as defined by the ap
 
 ![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20021938.png)
 
-![Screenshot](assets/IMG_A88D380B-BF00-4BF1-890A-8107E6549559.jpeg)
+![Screenshot](https://raw.githubusercontent.com/Aros3205/Active-Directory-Hardening-and-Group-Policy-Implementation-Project-2/main/Screenshot%202025-12-02%20020710.png)
 
 
 ---
